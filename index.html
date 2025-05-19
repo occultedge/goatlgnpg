@@ -5,7 +5,7 @@
   <style>
     body {
       font-family: Arial, sans-serif;
-      background: #f5f5f5;
+      background: #f9f9f9;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -15,8 +15,8 @@
       background: white;
       padding: 30px;
       border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.2);
-      width: 300px;
+      box-shadow: 0 0 8px rgba(0,0,0,0.1);
+      width: 320px;
       text-align: center;
     }
     input {
@@ -61,22 +61,22 @@
       return;
     }
 
-    const originalURL = "https://script.google.com/macros/s/AKfycbzbuAbMtnXUM76La2OQ2trr1El5IfzpHlLA-H7e0rbFJ2w6fOMUN9TuUylRdcuJpHbXQA/exec";
-    const version = Date.now(); // prevents cache
-    const proxyURL = "https://corsproxy.io/?" + encodeURIComponent(`${originalURL}?username=${username}&password=${password}&v=${version}`);
+    const baseURL = "https://script.google.com/macros/s/AKfycbyEjvjmt8nNMfMhtCo7V2S3jJvuCU-u5nuD-XAdOpx2go2QHcbD5iLow11YDXakY0kexQ/exec";
+    const fullURL = `${baseURL}?username=${encodeURIComponent(username)}&password=${encodeURIComponent(password)}&v=${Date.now()}`;
+    const proxyURL = "https://corsproxy.io/?" + encodeURIComponent(fullURL);
 
     try {
       const response = await fetch(proxyURL);
       const result = await response.text();
 
       if (result === "success") {
-        window.location.href = "course.html"; // change this if needed
+        window.location.href = "course.html"; // adjust if needed
       } else {
         messageBox.textContent = "Invalid login. Please try again.";
       }
     } catch (error) {
-      messageBox.textContent = "Something went wrong. Please try again.";
       console.error("Login error:", error);
+      messageBox.textContent = "Network error. Try again.";
     }
   }
 </script>
