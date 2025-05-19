@@ -62,14 +62,15 @@
     }
 
     const originalURL = "https://script.google.com/macros/s/AKfycbzbuAbMtnXUM76La2OQ2trr1El5IfzpHlLA-H7e0rbFJ2w6fOMUN9TuUylRdcuJpHbXQA/exec";
-    const proxyURL = "https://corsproxy.io/?" + encodeURIComponent(`${originalURL}?username=${username}&password=${password}`);
+    const version = Date.now(); // prevents cache
+    const proxyURL = "https://corsproxy.io/?" + encodeURIComponent(`${originalURL}?username=${username}&password=${password}&v=${version}`);
 
     try {
       const response = await fetch(proxyURL);
       const result = await response.text();
 
       if (result === "success") {
-        window.location.href = "course.html"; // change this to your actual course page
+        window.location.href = "course.html"; // change this if needed
       } else {
         messageBox.textContent = "Invalid login. Please try again.";
       }
