@@ -61,17 +61,21 @@
       return;
     }
 
+    const originalURL = "https://script.google.com/macros/s/AKfycbzbuAbMtnXUM76La2OQ2trr1El5IfzpHlLA-H7e0rbFJ2w6fOMUN9TuUylRdcuJpHbXQA/exec";
+    const proxyURL = "https://corsproxy.io/?" + encodeURIComponent(`${originalURL}?username=${username}&password=${password}`);
+
     try {
-      const response = await fetch(`https://script.google.com/macros/s/AKfycbyEGDnYfhqgFZ77plHg1fWgSAdYxO1-bg_OrbJ89u66Nd7BDNzOmWnpdrlpxAhaSMUTwA/exec?username=${encodeURIComponent(username)}&password=${encodeURIComponent(password)}`);
+      const response = await fetch(proxyURL);
       const result = await response.text();
 
       if (result === "success") {
-        window.location.href = "https://occultedge.github.io/gtfrmngmdulelst/#"; // Change this to your course page
+        window.location.href = "course.html"; // change this to your actual course page
       } else {
         messageBox.textContent = "Invalid login. Please try again.";
       }
     } catch (error) {
       messageBox.textContent = "Something went wrong. Please try again.";
+      console.error("Login error:", error);
     }
   }
 </script>
